@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .main-container{
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            cursor: pointer;
+        }
+        .item{
+            width: 97px;
+            height: 97px;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .item:hover{
+            border: 1px solid blue;   
+        }
+        .circle{
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            border: 2px solid brown;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+        const items = document.querySelectorAll('.item')
+            
+        socket.on('game', ()=>{
+            items.forEach(item =>{
+                item.addEventListener('click', (e)=>{
+                    let circle = document.createElement('div');
+                    circle.setAttribute('class', 'circle')
+                    item.appendChild(circle);
+                    socket.emit('hod',circle);
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
